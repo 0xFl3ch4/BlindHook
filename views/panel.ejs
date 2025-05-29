@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blind XSS Panel</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    img { max-width: 300px; border: 1px solid #888; }
+  </style>
+</head>
+<body>
+  <h1>Blind XSS Payloads</h1>
+  <table>
+    <tr>
+      <th>Time</th>
+      <th>IP</th>
+      <th>URL</th>
+      <th>User Agent</th>
+      <th>Screenshot</th>
+    </tr>
+    <% payloads.forEach(p => { %>
+    <tr>
+      <td><%= p.time %></td>
+      <td><%= p.ip %></td>
+      <td><%= p.url %></td>
+      <td><%= p.userAgent || p.ua %></td>
+      <td>
+        <% if (p.screenshot) { %>
+          <img src="<%= p.screenshot %>" alt="Screenshot">
+        <% } else { %>
+          No screenshot
+        <% } %>
+      </td>
+    </tr>
+    <% }) %>
+  </table>
+</body>
+</html>

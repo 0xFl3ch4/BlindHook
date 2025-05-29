@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const db = require('./db');
 
 const app = express();
 app.use(cors());
@@ -14,18 +15,28 @@ const payloads = [];
 
 // Payload receiver
 app.post('/collect', (req, res) => {
-  payloads.push({
-    ...req.body,
-    time: new Date().toISOString(),
-    ip: req.ip
-  });
+  const { url, userAgent, ua, screenshot } = req.body;
+  const ip = req.ip;
+  const time = new Date().toISOString();
+
+  db.run(`
+    INSERT INTO payloads (url, userAgent, screenshot, ip, time)
+    VALUES (?, ?, ?, ?, ?)
+  `, [url, userAgent || ua, screenshot || null, ip, time]);
+
   res.sendStatus(200);
 });
 
 // Admin panel route
 app.get('/panel', (req, res) => {
-  res.render('panel', { payloads });
+  db.all('SELECT * FROM payloads ORDER BY id DESC', [], (err, rows) => {
+    if (err) {
+      return res.status(500).send('Database error');
+    }
+    res.render('panel', { payloads: rows });
+  });
 });
+
 
 const PORT = 4000;
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}/panel`));

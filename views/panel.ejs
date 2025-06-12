@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-black text-yellow-400">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BlindHook</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans text-gray-900">
+<body class="bg-black font-mono text-yellow-400">
   <div class="max-w-7xl mx-auto py-10 px-4">
-    <h1 class="text-3xl font-bold mb-8 text-center">XSS Panel</h1>
+    <h1 class="text-4xl font-bold mb-8 text-center text-yellow-300">⚠️ Blind XSS Panel ⚠️</h1>
 
-    <div class="overflow-x-auto bg-white rounded-lg shadow p-6">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
+    <div class="overflow-x-auto bg-zinc-900 rounded-lg shadow p-6 border border-yellow-500">
+      <table class="min-w-full divide-y divide-yellow-500">
+        <thead class="bg-zinc-800">
           <tr>
-            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">URL</th>
-            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">IP</th>
-            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">User-Agent</th>
-            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Data/Hora</th>
-            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Screenshot</th>
+            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">ID</th>
+            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">URL</th>
+            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">IP</th>
+            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">User-Agent</th>
+            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">Data/Hora</th>
+            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">Screenshot</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="bg-black divide-y divide-yellow-600">
           <% payloads.forEach(p => { %>
-            <tr>
+            <tr class="hover:bg-yellow-900/20 transition duration-200">
               <td class="px-4 py-2 text-sm"><%= p.id %></td>
               <td class="px-4 py-2 text-sm break-all max-w-xs"><%= p.url %></td>
               <td class="px-4 py-2 text-sm"><%= p.ip %></td>
@@ -32,9 +32,9 @@
               <td class="px-4 py-2 text-sm"><%= p.time %></td>
               <td class="px-4 py-2 text-sm">
                 <% if (p.screenshot) { %>
-                  <img src="<%= p.screenshot %>" alt="screenshot" class="w-32 h-auto border rounded shadow" />
+                  <img src="<%= p.screenshot %>" alt="screenshot" class="w-32 h-auto border border-yellow-400 rounded shadow cursor-pointer hover:scale-105 transition" onclick="openModal('<%= p.screenshot %>')" />
                 <% } else { %>
-                  <span class="text-gray-400 italic">Sem imagem</span>
+                  <span class="text-yellow-600 italic">Sem imagem</span>
                 <% } %>
               </td>
             </tr>
@@ -43,5 +43,34 @@
       </table>
     </div>
   </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50">
+    <div class="relative max-w-4xl w-full p-4">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-yellow-300 text-3xl font-bold">&times;</button>
+      <img id="modal-img" src="" alt="Screenshot grande" class="w-full h-auto rounded shadow-lg border border-yellow-500" />
+    </div>
+  </div>
+
+  <script>
+    function openModal(src) {
+      const modal = document.getElementById('modal');
+      const modalImg = document.getElementById('modal-img');
+      modalImg.src = src;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    // Fecha com ESC
+    document.addEventListener('keydown', function (e) {
+      if (e.key === "Escape") closeModal();
+    });
+  </script>
 </body>
 </html>

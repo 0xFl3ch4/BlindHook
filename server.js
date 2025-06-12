@@ -45,15 +45,46 @@ app.get('/login', (req, res) => {
 });
 
 // Login handler
+// In-memory store for failed attempts
+const failedLoginAttempts = {};
+const MAX_ATTEMPTS = 5;
+const LOCK_TIME = 1 * 60 * 1000; // 5 minutes
+
 app.post('/login', (req, res) => {
   const userPin = req.body.pin;
+
+  // Use IP or some key to track attempts — here we use IP for simplicity
+  const userKey = req.ip;
+
+  const attemptInfo = failedLoginAttempts[userKey] || { count: 0, lastFailedAt: 0 };
+
+  // Check if locked out
+  if (attemptInfo.count >= MAX_ATTEMPTS) {
+    const timePassed = Date.now() - attemptInfo.lastFailedAt;
+    if (timePassed < LOCK_TIME) {
+      const waitSeconds = Math.ceil((LOCK_TIME - timePassed) / 1000);
+      return res.render('login', { error: `Too many failed attempts. Try again in ${waitSeconds} seconds.` });
+    } else {
+      // Lock expired, reset attempts
+      failedLoginAttempts[userKey] = { count: 0, lastFailedAt: 0 };
+    }
+  }
+
   if (userPin === PIN) {
+    // Success: reset attempts
+    delete failedLoginAttempts[userKey];
     req.session.authenticated = true;
-    res.redirect('/dashboard'); // redirect to dashboard after login
+    return res.redirect('/dashboard');
   } else {
-    res.render('login', { error: 'Incorrect PIN' });
+    // Failed login
+    failedLoginAttempts[userKey] = {
+      count: attemptInfo.count + 1,
+      lastFailedAt: Date.now()
+    };
+    return res.render('login', { error: 'Incorrect PIN' });
   }
 });
+
 
 // Logout route (optional)
 app.get('/logout', (req, res) => {

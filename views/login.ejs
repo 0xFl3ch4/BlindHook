@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-black text-yellow-400">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - BlindHook</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black font-mono text-yellow-400 flex items-center justify-center h-screen">
+  <form action="/login" method="POST" class="bg-zinc-900 p-6 rounded shadow max-w-sm w-full">
+    <h1 class="text-2xl mb-4 font-bold text-yellow-300 text-center">Enter PIN</h1>
+    <% if (typeof error !== 'undefined') { %>
+      <p class="text-red-500 mb-4"><%= error %></p>
+    <% } %>
+    <input
+      type="password"
+      name="pin"
+      placeholder="PIN"
+      class="w-full p-2 mb-4 rounded border border-yellow-400 bg-black text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+      required
+      autofocus
+    />
+    <button
+      type="submit"
+      class="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-2 rounded"
+    >Login</button>
+  </form>
+</body>
+</html>

@@ -1,5 +1,11 @@
 # TODO List: Standout Blind XSS Server Project
-
+Hora direita
+Search bar
+Map
+Ficar guardado o ipv4 e ipv6
+Ver reports individualmente, quando clicados em cima
+Sort Colums
+Email notifications
 ## I. Core Infrastructure & Baseline Features
 - [X ] **Setup Basic Callback Server:**
     - [X ] HTTP/S listener for incoming XSS payloads.

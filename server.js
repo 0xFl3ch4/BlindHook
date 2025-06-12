@@ -28,12 +28,12 @@ app.post('/collect', (req, res) => {
 });
 
 // Admin panel route
-app.get('/panel', (req, res) => {
+app.get('/dashboard', (req, res) => {
   db.all('SELECT * FROM payloads ORDER BY id DESC', [], (err, rows) => {
     if (err) {
       return res.status(500).send('Database error');
     }
-    res.render('panel', { payloads: rows });
+    res.render('dashboard', { payloads: rows });
   });
 });
 

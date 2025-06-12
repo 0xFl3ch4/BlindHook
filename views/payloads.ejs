@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-black text-yellow-400">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payload Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black font-mono text-yellow-400">
+  <!-- Include navbar -->
+  <%- include('partials/navbar') %>
+
+  <!-- Content -->
+  <div class="pt-20 px-4 max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6 text-center text-yellow-300">Payload Generator</h1>
+
+    <div class="bg-zinc-800 rounded-lg p-6 shadow space-y-6">
+      <% payloads.forEach(p => { %>
+        <div class="flex justify-between items-center bg-zinc-900 p-4 rounded">
+          <code class="text-sm break-all"><%= p %></code>
+          <button onclick="copyToClipboard('<%= p.replace(/'/g, `\\'`) %>')" class="ml-4 bg-yellow-500 hover:bg-yellow-400 text-black px-3 py-1 rounded text-sm font-semibold">Copiar</button>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Payload copiado!");
+      });
+    }
+  </script>
+</body>
+</html>

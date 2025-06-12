@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-black text-yellow-400">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black font-mono text-yellow-400">
+  <!-- Include navbar -->
+  <%- include('partials/navbar') %>
+
+  <!-- Content -->
+  <div class="pt-20 px-6 max-w-4xl mx-auto text-left">
+    <h1 class="text-4xl font-bold text-yellow-300 mb-6">About BlindHook</h1>
+
+    <p class="mb-4 text-lg leading-relaxed text-yellow-400">
+      I'm Ricardo Ferreira, a cybersecurity student with a strong interest in offensive security and ethical hacking.
+      I created <strong>BlindHook</strong> to serve as a blind XSS payload collector, a tool that can help identify and monitor
+      client-side execution of malicious scripts in environments where traditional feedback mechanisms fail.
+    </p>
+
+    <p class="mb-4 text-lg leading-relaxed text-yellow-400">
+      This platform allows me to capture metadata from triggered payloads, such as the victim's IP address, user-agent, visited URL,
+      and a screenshot of the page at execution time. The collected data is then presented in a dashboard.
+    </p>
+
+    <p class="mb-4 text-lg leading-relaxed text-yellow-400">
+      I'm passionate about web application security, bug bounty hunting, and red teaming. I built this tool to support
+      stealthy payload testing during internal assessments or CTF-style exercises. My focus is on creating practical, real-world tools
+      that help visualize how and when payloads fire.
+    </p>
+
+    <p class="text-sm mt-8 text-yellow-500 italic">
+      BlindHook is intended strictly for ethical and authorized security research. Unauthorized use is prohibited.
+    </p>
+  </div>
+</body>
+</html>

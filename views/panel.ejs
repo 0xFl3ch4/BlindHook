@@ -7,24 +7,28 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black font-mono text-yellow-400">
-  <div class="max-w-7xl mx-auto py-10 px-4">
-    <h1 class="text-4xl font-bold mb-8 text-center text-yellow-300">⚠️ Blind XSS Panel ⚠️</h1>
+  <!-- Include navbar -->
+  <%- include('partials/navbar') %>
 
-    <div class="overflow-x-auto bg-zinc-900 rounded-lg shadow p-6 border border-yellow-500">
-      <table class="min-w-full divide-y divide-yellow-500">
-        <thead class="bg-zinc-800">
+  <!-- Main Content -->
+  <div class="pt-20 px-4 max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8 text-center text-yellow-300">XSS Panel</h1>
+
+    <div class="overflow-x-auto bg-zinc-800 rounded-lg shadow-lg p-6">
+      <table class="min-w-full divide-y divide-yellow-700 text-yellow-200">
+        <thead class="bg-zinc-900 text-yellow-400">
           <tr>
-            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">ID</th>
-            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">URL</th>
-            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">IP</th>
-            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">User-Agent</th>
-            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">Data/Hora</th>
-            <th class="px-4 py-2 text-left text-xs font-bold text-yellow-400 uppercase">Screenshot</th>
+            <th class="px-4 py-2 text-left text-xs font-bold uppercase">ID</th>
+            <th class="px-4 py-2 text-left text-xs font-bold uppercase">URL</th>
+            <th class="px-4 py-2 text-left text-xs font-bold uppercase">IP</th>
+            <th class="px-4 py-2 text-left text-xs font-bold uppercase">User-Agent</th>
+            <th class="px-4 py-2 text-left text-xs font-bold uppercase">Data/Hora</th>
+            <th class="px-4 py-2 text-left text-xs font-bold uppercase">Screenshot</th>
           </tr>
         </thead>
-        <tbody class="bg-black divide-y divide-yellow-600">
+        <tbody class="bg-zinc-800 divide-y divide-yellow-700">
           <% payloads.forEach(p => { %>
-            <tr class="hover:bg-yellow-900/20 transition duration-200">
+            <tr>
               <td class="px-4 py-2 text-sm"><%= p.id %></td>
               <td class="px-4 py-2 text-sm break-all max-w-xs"><%= p.url %></td>
               <td class="px-4 py-2 text-sm"><%= p.ip %></td>
@@ -32,9 +36,10 @@
               <td class="px-4 py-2 text-sm"><%= p.time %></td>
               <td class="px-4 py-2 text-sm">
                 <% if (p.screenshot) { %>
-                  <img src="<%= p.screenshot %>" alt="screenshot" class="w-32 h-auto border border-yellow-400 rounded shadow cursor-pointer hover:scale-105 transition" onclick="openModal('<%= p.screenshot %>')" />
+                  <img src="<%= p.screenshot %>" alt="screenshot" class="w-32 h-auto border border-yellow-600 rounded shadow cursor-pointer hover:scale-105 transition"
+                       onclick="showImageModal('<%= p.screenshot %>')" />
                 <% } else { %>
-                  <span class="text-yellow-600 italic">Sem imagem</span>
+                  <span class="text-yellow-500 italic">Sem imagem</span>
                 <% } %>
               </td>
             </tr>
@@ -45,32 +50,23 @@
   </div>
 
   <!-- Modal -->
-  <div id="modal" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50">
-    <div class="relative max-w-4xl w-full p-4">
-      <button onclick="closeModal()" class="absolute top-2 right-2 text-yellow-300 text-3xl font-bold">&times;</button>
-      <img id="modal-img" src="" alt="Screenshot grande" class="w-full h-auto rounded shadow-lg border border-yellow-500" />
-    </div>
+  <div id="imageModal" class="hidden fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+    <span class="absolute top-4 right-6 text-yellow-400 text-3xl font-bold cursor-pointer" onclick="closeImageModal()">×</span>
+    <img id="modalImage" class="max-w-4xl max-h-full border-4 border-yellow-600 rounded-lg shadow-lg" />
   </div>
 
+  <!-- Modal Script -->
   <script>
-    function openModal(src) {
-      const modal = document.getElementById('modal');
-      const modalImg = document.getElementById('modal-img');
-      modalImg.src = src;
+    function showImageModal(src) {
+      const modal = document.getElementById('imageModal');
+      const image = document.getElementById('modalImage');
+      image.src = src;
       modal.classList.remove('hidden');
-      modal.classList.add('flex');
     }
 
-    function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
+    function closeImageModal() {
+      document.getElementById('imageModal').classList.add('hidden');
     }
-
-    // Fecha com ESC
-    document.addEventListener('keydown', function (e) {
-      if (e.key === "Escape") closeModal();
-    });
   </script>
 </body>
 </html>

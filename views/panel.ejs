@@ -1,39 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Blind XSS Panel</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 8px; }
-    img { max-width: 300px; border: 1px solid #888; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlindHook</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>Blind XSS Payloads</h1>
-  <table>
-    <tr>
-      <th>Time</th>
-      <th>IP</th>
-      <th>URL</th>
-      <th>User Agent</th>
-      <th>Screenshot</th>
-    </tr>
-    <% payloads.forEach(p => { %>
-    <tr>
-      <td><%= p.time %></td>
-      <td><%= p.ip %></td>
-      <td><%= p.url %></td>
-      <td><%= p.userAgent || p.ua %></td>
-      <td>
-        <% if (p.screenshot) { %>
-          <img src="<%= p.screenshot %>" alt="Screenshot">
-        <% } else { %>
-          No screenshot
-        <% } %>
-      </td>
-    </tr>
-    <% }) %>
-  </table>
+<body class="bg-gray-100 font-sans text-gray-900">
+  <div class="max-w-7xl mx-auto py-10 px-4">
+    <h1 class="text-3xl font-bold mb-8 text-center">XSS Panel</h1>
+
+    <div class="overflow-x-auto bg-white rounded-lg shadow p-6">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">URL</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">IP</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">User-Agent</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Data/Hora</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Screenshot</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% payloads.forEach(p => { %>
+            <tr>
+              <td class="px-4 py-2 text-sm"><%= p.id %></td>
+              <td class="px-4 py-2 text-sm break-all max-w-xs"><%= p.url %></td>
+              <td class="px-4 py-2 text-sm"><%= p.ip %></td>
+              <td class="px-4 py-2 text-sm break-all max-w-xs"><%= p.userAgent %></td>
+              <td class="px-4 py-2 text-sm"><%= p.time %></td>
+              <td class="px-4 py-2 text-sm">
+                <% if (p.screenshot) { %>
+                  <img src="<%= p.screenshot %>" alt="screenshot" class="w-32 h-auto border rounded shadow" />
+                <% } else { %>
+                  <span class="text-gray-400 italic">Sem imagem</span>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </body>
 </html>

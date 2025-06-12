@@ -15,14 +15,14 @@ const payloads = [];
 
 // Payload receiver
 app.post('/collect', (req, res) => {
-  const { url, userAgent, ua, screenshot } = req.body;
-  const ip = req.ip;
+  const { url, userAgent, ua, screenshot} = req.body;
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const time = new Date().toISOString();
 
   db.run(`
     INSERT INTO payloads (url, userAgent, screenshot, ip, time)
     VALUES (?, ?, ?, ?, ?)
-  `, [url, userAgent || ua, screenshot || null, ip, time]);
+  `, [url, userAgent || ua, screenshot || null, ip, time || null]);
 
   res.sendStatus(200);
 });

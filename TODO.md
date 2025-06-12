@@ -1,5 +1,9 @@
 # TODO List: Standout Blind XSS Server Project
+Map blank
 Hora direita
+Cookie
+Site demo
+
 Search bar
 Map
 Ficar guardado o ipv4 e ipv6

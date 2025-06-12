@@ -8,6 +8,9 @@ const session = require('express-session');
 const db = require('./db');
 require('dotenv').config();
 
+
+
+
 const app = express();
 const PIN = process.env.BLINDXSS_PIN;
 
@@ -15,6 +18,7 @@ if (!PIN) {
   console.error('Error: BLINDXSS_PIN not set in environment variables');
   process.exit(1);
 }
+  
 
 app.use(cors());
 app.use(express.json());
@@ -25,8 +29,25 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // keep as false because you're not forcing HTTPS-only cookies yet
+  cookie: { secure: true } // keep as false because you're not forcing HTTPS-only cookies yet
 }));
+
+// Root route redirection based on authentication
+app.get('/', (req, res) => {
+  if (req.session && req.session.authenticated) {
+    return res.redirect('/dashboard');
+  } else {
+    return res.redirect('/login');
+  }
+});
+
+// Login page (verifica se já está autenticado)
+app.get('/login', (req, res) => {
+  if (req.session && req.session.authenticated) {
+    return res.redirect('/dashboard');
+  }
+  res.render('login', { error: null });
+});
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -39,9 +60,7 @@ function checkPin(req, res, next) {
 }
 
 // Login page
-app.get('/login', (req, res) => {
-  res.render('login', { error: null });
-});
+
 
 // In-memory store for failed attempts
 const failedLoginAttempts = {};
@@ -124,6 +143,9 @@ app.get('/about', checkPin, (req, res) => {
 
 app.get('/notifications', checkPin, (req, res) => {
   res.render('notifications');
+});
+app.get('/map', checkPin, (req, res) => {
+  res.render('map');
 });
 
 // Start HTTP server (port 4000)

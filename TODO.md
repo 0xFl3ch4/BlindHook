@@ -1,36 +1,47 @@
-# TODO List: Standout Blind XSS Server Project
-Map blank
-Hora direita
-Cookie
-Site demo
-ola
-Search bar
-Map
-Ficar guardado o ipv4 e ipv6
-Ver reports individualmente, quando clicados em cima
-Sort Colums
-Email notifications
-## I. Core Infrastructure & Baseline Features
-- [X ] **Setup Basic Callback Server:**
-    - [X ] HTTP/S listener for incoming XSS payloads.
-    - [X ] Secure data storage for collected information (consider encryption at rest).
-- [X ] **Develop Basic Payload Generation:**
-    - [X ] Generate simple JavaScript payloads that collect essential data.
-    - [X ] Offer easy-to-copy payload snippets.
-- [ ] **Implement Core Data Collection:**
-    - [X ] Victim IP Address, User-Agent.
-    - [X ] Full URI of the page where XSS fired.
-    - [ ] Referer header.
-    - [ ] Non-HTTPOnly Cookies.
-    - [ ] Basic DOM content (`document.documentElement.outerHTML`).
-    - [X ] Screenshot of the page (using HTML5 canvas like `html2canvas` or `html-to-image`).
-    - [ ] Local Storage and Session Storage content.
-- [ ] **Build a Web UI/Dashboard:**
-    - [X ] Display collected XSS reports.
-    - [ ] Allow viewing of individual report details.
-    - [ ] Basic filtering/searching of reports.
-- [ ] **Basic Notification System:**
-    - [ ] Email notifications for new XSS fires.
+Limpar todo
+Servidor XSS:
+    Coluna Cookie
+    Hora direita
+    Search bar
+    Map
+    Ver reports individualmente, quando clicados em cima
+        ipv4
+        ipv6
+        
+        user agent
+        Cookie
+        screenshot
+        resulution of screen
+        Local Storage and Session Storage content.
+        Referer header.
+        Non-HTTPOnly Cookies.
+    Sort Colums
+    Alteração do butao para copied em vez de alert
+    Notifications
+        Email
+        Discord
+        Slack
+        Telegram
+        Ensure notifications are as close to real-time as possible.
+    Documentação no git
+    Dashboard refresh itself
+
+Site vulneravel:
+    Fazer mitigação de vulnerabilidade no site vulneravel
+    Copia de site explorado vida real
+    Quando acabar tudo, ir ao site https://xss.report/contact para ver o que poderia meter adicional
+Payload tab
+    WAF evasion techniques mangler
+    link shortner
+Authentication
+    Users
+    Roles
+    Possibility off Two-Factor Authentication (2FA) for accessing the server UI.
+Docker
+
+
+
+
 
 ## II. Advanced Data Exfiltration (Focus on Standout Features)
 *Many advanced techniques require robust PoCs. Further research and testing will be critical here.*
@@ -61,83 +72,3 @@ Email notifications
     - [ ] **WebRTC Data Channels:**
         - [ ] Explore using WebRTC data channels for covert OOB communication.
         - [ ] *Further Research: Tackle the signaling server requirement – can it be simplified or proxied for XSS payloads? Look for PoCs.*
-
-## III. Reporting & Notifications (Innovative & Customizable)
-- [ ] **Real-time Alerts & Diverse Channels:**
-    - [ ] Ensure notifications are as close to real-time as possible.
-    - [ ] **Standard Channels:** Email, Webhooks (highly customizable), Slack, Telegram.
-    - [ ] **Secure Channels:**
-        - [ ] PGP-encrypted email notifications (integrate libraries like `nodemailer-openpgp` for Node.js or `python-gnupg` for Python).
-        - [ ] *Further Research: Feasibility of direct integration with Signal or Matrix (may require unofficial APIs or bridge services – assess reliability and security).*
-- [ ] **Advanced Report Filtering & Tagging:**
-    - [ ] Allow users to add custom tags to XSS reports (e.g., `project:xyz`, `critical`, `admin-panel`).
-    - [ ] Implement advanced filtering based on all collected data fields and custom tags (e.g., `victim_ip_starts_with: "10." AND tag: "critical"`).
-    - [ ] Support complex query operators (equals, contains, starts/ends with, regex).
-- [ ] **Event Correlation Engine:**
-    - [ ] Develop logic to correlate multiple XSS events:
-        - [ ] From the same victim (IP, User-Agent, session identifiers if available).
-        - [ ] Indicating an attack chain (e.g., XSS fire -> successful page grab -> subsequent XSS on a new page).
-        - [ ] Grouping similar vulnerabilities (e.g., same vulnerable parameter across different pages).
-    - [ ] *Further Research: Define specific correlation rules and logic tailored to Blind XSS scenarios.*
-- [ ] **Interactive Dashboards & Visualizations:**
-    - [ ] Utilize JS charting libraries (e.g., D3.js, ECharts, Chart.js, Highcharts).
-    - [ ] **Standard Visualizations:**
-        - [ ] Timeline of XSS events.
-        - [ ] Geographic map of victim IPs (with appropriate privacy considerations/anonymization).
-        - [ ] Pie/Bar charts of top vulnerable pages, parameters, browsers, OS.
-    - [ ] **Innovative Visualizations:**
-        - [ ] Sankey diagrams or graph visualizations for attack paths or data exfiltration flows.
-        - [ ] Heatmaps for activity.
-        - [ ] *Further Research: Explore novel ways to visualize XSS data to provide deeper insights.*
-
-## IV. Payload Management & Delivery (Sophistication & Evasion)
-- [ ] **Payload Templating & Dynamic Generation:**
-    - [ ] Allow users to create payload templates.
-    - [ ] Dynamically generate payloads based on selected features or target context.
-- [ ] **Built-in Obfuscation & Evasion Techniques:**
-    - [ ] Offer multiple layers/types of JavaScript obfuscation.
-    - [ ] Include techniques to bypass common WAF signatures or input filters.
-    - [ ] *Further Research: Stay updated on latest WAF evasion techniques.*
-- [ ] **Payload Versioning & Management:**
-    - [ ] Allow users to save, categorize, and version their custom payloads.
-- [ ] **Short/Stealthy Payload Delivery Options:**
-    - [ ] Provide shortened URLs for payloads.
-    - [ ] Offer payloads that are less likely to be detected by simple pattern matching.
-
-## V. Server Security, Usability & Stealth
-- [ ] **Enhanced Server Security:**
-    - [ ] Implement Two-Factor Authentication (2FA) for accessing the server UI.
-    - [ ] Ensure all dependencies are regularly updated and audited.
-    - [ ] Harden server configuration (HTTP headers, TLS settings).
-    - [ ] Encrypt sensitive configuration data and stored XSS findings at rest.
-- [ ] **Improved Usability:**
-    - [ ] Clean, intuitive, and responsive web UI.
-    - [ ] Easy deployment options (e.g., Docker container, detailed setup scripts).
-    - [ ] Develop a well-documented API for programmatic interaction.
-    - [ ] Consider multi-user support with Role-Based Access Control (RBAC) if intended for team use.
-- [ ] **Server-Side Stealth:**
-    - [ ] Allow customization of server response headers to avoid easy fingerprinting.
-    - [ ] Advise users on using non-obvious domain names for the callback server.
-    - [ ] *Further Research: Techniques for blending XSS callback traffic with legitimate-looking traffic.*
-- [ ] **Payload Stealth (Client-Side):**
-    - [ ] Anti-debugging techniques in payloads.
-    - [ ] Delayed execution or conditional triggering (see Context-Aware Triggering).
-    - [ ] Techniques to avoid detection by client-side security tools.
-
-## VI. Context-Aware Triggering (Intelligent Payloads)
-- [ ] **Develop Payloads That Assess Environment:**
-    - [ ] Check for specific cookies, localStorage items, or JavaScript variables.
-    - [ ] Identify if running in a privileged context (e.g., admin section based on DOM elements).
-    - [ ] Detect if developer tools are open.
-- [ ] **Implement Conditional Logic:**
-    - [ ] Only exfiltrate sensitive data if certain conditions are met.
-    - [ ] Trigger more aggressive payloads only in specific contexts.
-    - [ ] Delayed payload execution.
-
-## VII. General Project & Research Notes
-- [ ] **Address Research Gaps:** Due to inaccessible resources during the initial research, some advanced techniques require deeper investigation and PoC development. Prioritize areas that offer the most "standout" potential.
-- [ ] **Ethical Considerations:** Always use such a tool responsibly and legally. Clearly define the ethical use cases for your project.
-- [ ] **Documentation:** Thoroughly document the server setup, features, payload creation, and API usage.
-- [ ] **Community & Updates:** Consider how the project will be maintained and updated with new XSS techniques and browser changes.
-
-Good luck with your project! This list should provide a solid roadmap.

@@ -15,21 +15,44 @@
     <h1 class="text-3xl font-bold mb-6 text-center text-yellow-300">Payload Generator</h1>
 
     <div class="bg-zinc-800 rounded-lg p-6 shadow space-y-6">
-      <% payloads.forEach(p => { %>
+      <% payloads.forEach(p => { 
+           const encoded = Buffer.from(p, 'utf-8').toString('base64');
+      %>
         <div class="flex justify-between items-center bg-zinc-900 p-4 rounded">
           <code class="text-sm break-all"><%= p %></code>
-          <button onclick="copyToClipboard('<%= p.replace(/'/g, `\\'`) %>')" class="ml-4 bg-yellow-500 hover:bg-yellow-400 text-black px-3 py-1 rounded text-sm font-semibold">Copiar</button>
+          <button 
+            data-payload="<%= encoded %>" 
+            onclick="copyToClipboard(this)" 
+            class="ml-4 bg-yellow-500 hover:bg-yellow-400 text-black px-3 py-1 rounded text-sm font-semibold">
+            Copiar
+          </button>
         </div>
       <% }); %>
     </div>
   </div>
 
   <script>
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Payload copiado!");
-      });
-    }
+  function copyToClipboard(button) {
+    const base64 = button.getAttribute("data-payload");
+    const text = atob(base64); // decode Base64 safely
+
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = button.textContent;
+      const originalClasses = button.className;
+
+      button.textContent = "Copied";
+      button.classList.remove("bg-yellow-500", "hover:bg-yellow-400");
+      button.classList.add("bg-yellow-600");
+      button.disabled = true;
+
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.className = originalClasses;
+        button.disabled = false;
+      }, 3000);
+    });
+  }
   </script>
+
 </body>
 </html>

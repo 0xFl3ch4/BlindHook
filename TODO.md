@@ -16,7 +16,6 @@ Servidor XSS:
         Referer header.
         Non-HTTPOnly Cookies.
     Sort Colums
-    Alteração do butao para copied em vez de alert
     Notifications
         Email
         Discord

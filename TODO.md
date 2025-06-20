@@ -1,5 +1,4 @@
 Servidor XSS:
-    Search bar
     Map
     Ver reports individualmente, quando clicados em cima
         ipv4
@@ -11,7 +10,9 @@ Servidor XSS:
         Local Storage and Session Storage content.
         Referer header.
         Non-HTTPOnly Cookies.
-    Sort Colums
+    DashBoard
+        Search bar
+        Dashboard refresh itself
     Notifications
         Email
         Discord
@@ -19,25 +20,34 @@ Servidor XSS:
         Telegram
         Ensure notifications are as close to real-time as possible.
     Documentação no git
-    Dashboard refresh itself
+        installar npm
+        clonar repositorio
+        installar modulos npm
+        rodar servidor
+        meter publico
+
 
 Site vulneravel:
     Fazer mitigação de vulnerabilidade no site vulneravel
     Copia de site explorado vida real
     Quando acabar tudo, ir ao site https://xss.report/contact para ver o que poderia meter adicional
+    Documentação no git(como utilizar o servidor(clone,ligar(php -S)))
+    Meter Repositório Publico
 
 Depois de mínimo feito:
-Payload tab
-    WAF evasion techniques mangler
-    link shortner
-Authentication
-    Users
-    Roles
-    Possibility off Two-Factor Authentication (2FA) for accessing the server UI.
-Outer HTML para mapear site 
-Automatizar exploits
-    file uploads
-Docker
+    Payload tab
+        Diferent WAF evasion paylods
+        link shortner
+    DashBoard
+        Sort Colums
+    Authentication
+        Users
+        Roles
+        Possibility off Two-Factor Authentication (2FA) for accessing the server UI.
+    Outer HTML para mapear site 
+    Automatizar exploits
+        file uploads
+    Docker
 
 
 

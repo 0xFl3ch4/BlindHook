@@ -1,11 +1,9 @@
 Servidor XSS:
-    RE
     Search bar
     Map
     Ver reports individualmente, quando clicados em cima
         ipv4
         ipv6
-        
         user agent
         Cookie
         screenshot
@@ -27,6 +25,8 @@ Site vulneravel:
     Fazer mitigação de vulnerabilidade no site vulneravel
     Copia de site explorado vida real
     Quando acabar tudo, ir ao site https://xss.report/contact para ver o que poderia meter adicional
+
+Depois de mínimo feito:
 Payload tab
     WAF evasion techniques mangler
     link shortner
@@ -34,6 +34,9 @@ Authentication
     Users
     Roles
     Possibility off Two-Factor Authentication (2FA) for accessing the server UI.
+Outer HTML para mapear site 
+Automatizar exploits
+    file uploads
 Docker
 
 
